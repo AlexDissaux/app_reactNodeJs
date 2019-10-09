@@ -14,4 +14,5 @@ RUN export uid=1000 gid=1000 && \
 USER developer
 ENV HOME /home/developer
 CMD /usr/bin/firefox
-CMD ["firefox", "localhost"] # mettre ENTRYPOINT ici
+CMD ["apt","update"]
+CMD ["firefox", "appreact:3000", "2> /dev/null"] # mettre ENTRYPOINT ici

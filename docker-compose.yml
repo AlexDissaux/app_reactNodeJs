@@ -37,14 +37,13 @@ services:
     build:
       context: ./firefox/
       dockerfile: Dockerfile_firefox
+    depends_on:
+      - "appreact"
+      - "appnode"
     volumes:
       - '/tmp/.X11-unix:/tmp/.X11-unix'
-    web:
-      environment:
-        - DISPLAY=$DISPLAY
-    ports:
-      - '3000:3000'
-      - '80:80'
+    environment:
+      - DISPLAY=$DISPLAY
     networks:
       - default
 

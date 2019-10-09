@@ -50,7 +50,7 @@ class Add extends React.Component {
       text: ''
     }));
 
-    axios.post('http://localhost:3002/shopping-list', newItem)
+    axios.post('http://appnode:3002/shopping-list', newItem)
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -66,7 +66,7 @@ class Show extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3002/shopping-list').then(res => {
+    axios.get('http://appnode:3002/shopping-list').then(res => {
         const obj = res.data;
         this.setState({objets : obj});
       })
@@ -156,7 +156,7 @@ class Modify extends React.Component {
       text: ''
     }));
 
-    axios.put('http://localhost:3002/shopping-list/'+id.text, newItem)
+    axios.put('http://appnode:3002/shopping-list/'+id.text, newItem)
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -211,7 +211,7 @@ class Delete extends React.Component {
       id: ''
     }));
 
-    axios.delete('http://localhost:3002/shopping-list/'+id.text)
+    axios.delete('http://appnode:3002/shopping-list/'+id.text)
       .then(res => {
         console.log(res);
         console.log(res.data);
