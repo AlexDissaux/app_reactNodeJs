@@ -1,0 +1,52 @@
+version: "3"
+services:
+
+  # NodeJs Server      
+  appnode:
+    container_name: appNode
+    hostname: appNode
+    build:
+      context: ./appNode/
+      dockerfile: Dockerfile_node
+    volumes:
+      - './appNode:/appNode'
+    ports:
+      - '3002:3002'
+    networks:
+      - default
+
+  # React Application
+  appreact:
+    container_name: appReact
+    hostname: appReact
+    build:
+      context: ./appReact/
+      dockerfile: Dockerfile_react
+    volumes:
+      - './appReact:/appReact'
+    ports:
+      - '3000:3000'
+    networks:
+      - default
+
+
+  # Firefox Application
+  firefox:
+    container_name: firefox
+    hostname: firefox
+    build:
+      context: ./firefox/
+      dockerfile: Dockerfile_firefox
+    volumes:
+      - '/tmp/.X11-unix:/tmp/.X11-unix'
+    web:
+      environment:
+        - DISPLAY=$DISPLAY
+    ports:
+      - '3000:3000'
+      - '80:80'
+    networks:
+      - default
+
+networks:
+    default:

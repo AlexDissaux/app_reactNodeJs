@@ -1,0 +1,14 @@
+# base image
+FROM node:latest
+
+# set working directory
+WORKDIR /appReact
+
+COPY ./package.json /app_react
+
+# install and cache app dependencies
+RUN npm install #--silent
+RUN npm install react-scripts@3.0.1 -g #--silent
+
+# start app
+CMD ["npm", "start"]
