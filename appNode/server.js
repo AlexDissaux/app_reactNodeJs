@@ -5,6 +5,13 @@ const { format, transports } = require('winston')
 const expressWinston = require('express-winston')
 const uuidv4 = require('uuid/v4')
 
+// MongoDB
+
+const mongo = require('mongodb');
+
+var MongoClient = mongo.MongoClient;
+var url = "mongodb://mongo:27017/test";
+
 const app = express()
 app.use(bodyParser.json())
 app.use(cors())
@@ -55,6 +62,24 @@ app.delete('/shopping-list/:id', (req, res) => {
     res.end()
 })
 
+
+app.get('/mongo', (req, res) => {
+   
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        console.log("Database created!");
+        db.close();
+      });
+
+    res.send("ok")
+})
+
+
 const PORT = 3002
 
 app.listen(PORT, console.log(`listening to port ${PORT}`))
+
+
+
+
+

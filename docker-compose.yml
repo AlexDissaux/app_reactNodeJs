@@ -10,6 +10,8 @@ services:
       dockerfile: Dockerfile_node
     volumes:
       - './appNode:/appNode'
+    depends_on:
+      - "mongo"
     ports:
       - '3002:3002'
     networks:
@@ -26,6 +28,21 @@ services:
       - './appReact:/appReact'
     ports:
       - '3000:3000'
+    networks:
+      - default
+
+
+  # Mongo Database
+  mongo:
+    container_name: mongo
+    hostname: mongo
+    build:
+      context: ./mongo/
+      dockerfile: Dockerfile_mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - './mongo/db:/data/db'
     networks:
       - default
 

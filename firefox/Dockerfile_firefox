@@ -15,4 +15,4 @@ USER developer
 ENV HOME /home/developer
 CMD /usr/bin/firefox
 CMD ["apt","update"]
-CMD ["firefox", "appreact:3000", "2> /dev/null"] # mettre ENTRYPOINT ici
+CMD ["firefox", "appreact:3000", "appnode:3002", "&>/dev/null"] # mettre ENTRYPOINT ici
