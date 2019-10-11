@@ -27,9 +27,11 @@ app.use(
     })
 )
 
-const lists = {}
+//const lists = []
+const lists = [{text:'test',id:uuidv4()}]
 
 app.get('/shopping-list', (req, res) => {
+    //console.log((Object.values(lists)))
     res.json(Object.values(lists))
 })
 
@@ -39,6 +41,7 @@ app.post('/shopping-list', (req, res) => {
         ...req.body,
         id
     }
+    console.log(lists[id])
     res.json(id)
 })
 
@@ -62,7 +65,49 @@ app.delete('/shopping-list/:id', (req, res) => {
     res.end()
 })
 
+// This part bellow work but i want to try with async/await
+/*
+MongoClient.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("db");
+    dbo.createCollection("login", function(err, res) {
+      if (err) throw err;
+      console.log("Collection created!");
+      db.close();
+    });
+  }); */ 
 
+async function mongoStart (){
+
+  const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
+    .catch(err => { console.log(err); });
+
+    try {
+
+        const db = client.db("db");
+
+        let collection = db.collection('login');
+
+        let query = { text: 'Sample (Value Store in Mongo DataBase !)', id : uuidv4() }
+        let res = await collection.insertOne(query);        
+        query = { text: 'Second Sample (Value Store in Mongo DataBase !)', id : uuidv4() }
+        res = await collection.insertOne(query);
+       // console.log(res)
+        res = await collection.find({});
+        console.log(res);
+
+    } catch (err) {
+
+        console.log(err);
+    } finally {
+        // In comment because i want to use database after without call it again
+        //client.close();
+    }
+}
+mongoStart()
+
+// Testing query
+/*
 app.get('/mongo', (req, res) => {
    
     MongoClient.connect(url, function(err, db) {
@@ -71,8 +116,8 @@ app.get('/mongo', (req, res) => {
         db.close();
       });
 
-    res.send("ok")
-})
+    res.send(...req.body)
+})*/
 
 
 const PORT = 3002
