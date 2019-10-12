@@ -28,20 +28,26 @@ app.use(
 )
 
 //const lists = []
-const lists = [{text:'test',id:uuidv4()}]
+let lists = [{text:'This Item is store in NodeJS Server', id:uuidv4()}]
 
 app.get('/shopping-list', (req, res) => {
     //console.log((Object.values(lists)))
     res.json(Object.values(lists))
 })
 
-app.post('/shopping-list', (req, res) => {
+app.post('/shopping-list', async (req, res) => {
     const id = uuidv4()
     lists[id] = {
         ...req.body,
         id
     }
-    console.log(lists[id])
+    const db = client.db("db");
+
+        let collection = db.collection('login');
+
+        let query = lists[id]
+        await collection.insertOne(query);        
+        
     res.json(id)
 })
 
@@ -88,20 +94,24 @@ async function mongoStart (){
 
         let collection = db.collection('login');
 
-        let query = { text: 'Sample (Value Store in Mongo DataBase !)', id : uuidv4() }
+        let query = { text: '[FROM MONGODB] Sample ', id : uuidv4()  }
         let res = await collection.insertOne(query);        
-        query = { text: 'Second Sample (Value Store in Mongo DataBase !)', id : uuidv4() }
+        query = { text: '[FROM MONGODB] Second Sample ', id : uuidv4()  }
         res = await collection.insertOne(query);
        // console.log(res)
-        res = await collection.find({});
-        console.log(res);
+
+       // lists.push(await collection.findOne({ text: 'Sample (Value Store in Mongo.toArray()[DataBase !)'},{id : 1}));
+       // lists.push(await collection.findOne({ text: 'Second Sample (Value Store in Mongo DataBase !)'},{id : 1}));
+       lists = await collection.find().toArray();
+       console.log(await collection.find().toArray())
+        
 
     } catch (err) {
 
         console.log(err);
     } finally {
         // In comment because i want to use database after without call it again
-        //client.close();
+        client.close();
     }
 }
 mongoStart()

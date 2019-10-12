@@ -1,0 +1,23 @@
+# Execute the entire app, run :
+
+	xhost +
+	docker-compose up -d
+
+# Composition
+
+This project contain 4 container :
+
+	- React : Front-end
+	- NodeJs : Back-end
+	- MongoDB : Database
+	- Firefox : Open the app on a GUI
+
+# Use application
+
+	You can add object on the page "Ajouter object"
+	You can click on the menu on "Voir les objets" and click on "Actualiser" to see the recorded objects
+	You can delete or modify objects in the other tabs	
+
+# Author
+
+	Dissaux Alexandre
